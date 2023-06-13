@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!-- Основной шаблон -->
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <title>Автошкола "Омега"</title>
+</head>
+<body>
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" style="height: 100px; width: 100%;">
+      <div class="col-md-3 mb-2 mb-md-0">
+          <img class="container" style="vertical-align: middle; margin-left: 20px; width: 240px" alt="Лого" src="{% static 'img/logo.png' %}">
+      </div>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0" style="position: absolute; left: 25%; background-color: #119574; border-radius: 10px;">
+          <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary"><p class="change-text">Главная</p></a></li>
+        <li><a href="{% url 'apps' %}" class="nav-link px-2"><p class="change-text">Подать заявку</p></a></li>
+        <li><a href="{% url 'programs' %}" class="nav-link px-2"><p class="change-text">Программа обучения</p></a></li>
+        <li><a href="{% url 'school' %}" class="nav-link px-2"><p class="change-text">Об автошколе</p></a></li>
+          <li><a href="{% url 'org' %}" class="nav-link px-2"><p class="change-text">Об организации</p></a></li>
+          <li><a href="{% url 'contacts' %}" class="nav-link px-2"><p class="change-text">Контакты</p></a></li>
+          <li><a href="{% url 'news_home' %}" class="nav-link px-2"><p class="change-text">Новости</p></a></li>
+      </ul>
+    {% if user.is_authenticated %}
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0" style="position: absolute; left: 25%; margin-top: 90px; background-color: #008563; border-radius: 10px;">
+        <li><a href="{% url 'timetable' %}" class="nav-link px-2"><p class="change-text">Расписание вождения</p></a> </li>
+        <li><a href="{% url 'timetable' %}" class="nav-link px-2"><p class="change-text">Список экзаменуемых</p></a> </li>
+    </ul>
+    {% endif %}
+
+      <div class="col-md-3 text-end">
+          {% if user.is_authenticated %}
+          <p style="color: #FFFFFF; position: absolute; margin-left: 180px; margin-top: 7px; text-align: right;">{{ user }}</p>
+          <a href="{% url 'logout' %}"><button type="button" class="btn btn-outline-light me-2">Выйти</button></a>
+          {% else %}
+          <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-light me-2">Войти</button></a>
+          <a href="{% url 'register' %}"><button type="button" class="btn btn-outline-light me-2">Зарегистрироваться</button></a>
+          {% endif %}
+      </div>
+    </header>
+<div class="container">
+    <div class="content">
+    {% block content %}{% endblock %}
+    </div>
+</div>
+<div class="container">
+    {% block map %}{% endblock %}
+</div>
+
+<div class="footer">
+      <p style="color: #FFFFFF">Автошкола © Омега. Все права защищены.</p>
+</div>
+</body>
+</html>
